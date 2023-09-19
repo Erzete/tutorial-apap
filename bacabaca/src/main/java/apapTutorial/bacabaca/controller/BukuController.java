@@ -119,4 +119,19 @@ public class BukuController {
         model.addAttribute("id", buku.getId());
         return "delete-buku";
     }
+
+    @GetMapping("buku/deleteAll")
+    public String deleteBuku(@RequestParam("tahunTerbit") String tahunTerbit, Model model) {
+        List<Buku> listBuku = bukuService.getAllBuku();
+
+        for (int i = listBuku.size() - 1; i >= 0; i--) {
+            if (listBuku.get(i).getTahunTerbit().equals(tahunTerbit)) {
+                listBuku.remove(i);
+                continue;
+            }
+        }       
+
+        model.addAttribute("tahunTerbit", tahunTerbit);
+        return "delete-tahun";
+    }
 }
