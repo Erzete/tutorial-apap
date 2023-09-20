@@ -3,6 +3,29 @@
 ## Authors
 
 * **Rama Tridigdaya** - *2106638532* - *C*
+---
+## Tutorial 2
+### What I have learned today
+1. Apa itu DTO? Jelaskan kegunaannya pada proyek ini?
+   DTO (Data Transfer Object) adalah objek yang digunakan biasanya untuk melakukan transfer data di antara layer yang ada pada aplikasi. DTO digunakan untuk pemisahan data antara layer sehingga data yang sebenarnya dapat lebih terproteksi security-nya.
+2. Apa itu UUID? Mengapa UUID digunakan? 
+   UUID (Universally Unique Identifier) merupakan kombinasi unik angka dan huruf yang terdiri dari 128-bit digunakan sebagai "identifier" atau kalau dalam matkul basis data "key atribut" yang digunakan untuk membedakan satu objek dengan lainnya
+3. Pada service, mengapa perlu ada pemisahan antara interface dan implementasinya?
+   Karena adanya Dependency Injection (DI) pada Spring Boot untuk mengelola dependensi antara komponen yang ada pada aplikasi. Dengan pemisahan interface dan implementasi, kita bisa bisa menyatakan dependensi pada interface sehingga bisa leluasa ketika mengganti implementasi tanpa mengganggu implementasi komponen lainnya yang ada pada aplikasi.
+4. Menurut kamu anotasi @Autowired pada class Controller tersebut merupakan implementasi dari konsep apa? Dan jelaskan secara singkat cara kerja @Autowired tersebut dalam konteks service dan controller yang telah kamu buat.
+   Anotasi @Autowired ini merupakan implementasi dari konsep Dependency Injection. Pada package Service kita mempunyai implementasi dari
+   BukuService yang bernama BukuServiceImpl, kita menganotasikan BukuServiceImpl dengan @Service untuk menandainya sebagai komponen dari Spring tersebut. Nah, di controller bagian BukuController, kita menginginkan untuk mengakses data yang ada menggunakan fungsi yang ada pada BukuService oleh karena itu kita menganotasikannya dengan @Autowired sehingga secara otomatis Spring Boot akan mendeteksi pengimplementasian BukuService yang sesuai dalam hal BukuServiceImpl dan sekarang kita bisa mengakses fungsi yang dipunya oleh BukuService tanpa harus membuat objek atau juga pengelolaan dependensi secara manual.
+5. Apa perbedaan @GetMapping dan @PostMapping?
+   Simpelnya @GetMapping digunakan ketika kita menggunakan metode HTTP GET untuk membaca data sedangkan @PostMapping digunakan ketika kita menggunakan metode HTTP POST untuk mengirim (membuat/mengubah) data.
+6. Jelaskan proses yang terjadi di controller, model, dan service pada proses create buku, mulai dari fungsi formAddBuku hingga pengguna menerima halaman success-create-buku.
+   1) Controller -> Mendapatkan bahwa laman berada pada buku/create dan akan menjalankan fungsi formAddBuku membuat objek BukuDTO dan mengembalikan halaman form-create-buku
+   2) Controller -> Setelah user menekan tombol submit maka kita akan menerima data yang kini tersimpan di BukuDTO, fungsi addBuku akan berjalan. pertama cek dulu apakah Buku sudah ada (dari latihan), jika sudah maka buku tidak akan di-create, jika tidak ada maka buku akan di-create
+   3) Model -> Selain dari fungsi getter-nya, model tentunya digunakan untuk membuat objek Buku
+   4) Service -> Setelah objek Buku terbuat maka Controller akan memanggil fungsi yang ada pada Service dalam hal ini adalah fungsi createBuku. Setelah berhasil, maka dia akan me-load halaman form-create-buku
+7. Jelaskan mengenai th:object!
+   th:object ini pada dasarnya digunakan untuk menghubungkan objek yang ada pada Spring dengan HTML-nya. Jadi yang ada pada th:object itu maka dia akan diakses atribut-atributnya. Perubahan pada objek dalam HTML juga akan memengaruhi objeknya yang ada di Spring (menggunakan th:field)
+8. Jelaskan mengenai th:field!
+   th:field fungsinya seperti di atas berkaitan dengan th:object digunakan pada form untuk merubah nilai atribut yang ada pada objek. Pada source code, th:field secara otomatis akan berubah jadi id dan name yang akan = nama atributnya untuk POST.
 
 ---
 ## Tutorial 1
