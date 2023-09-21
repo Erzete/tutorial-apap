@@ -1,11 +1,19 @@
 package apapTutorial.bacabaca.controller;
 
-import apapTutorial.bacabaca.controller.DTO.BukuDTO;
+import apapTutorial.bacabaca.DTO.BukuMapper;
+import apapTutorial.bacabaca.DTO.request.CreateBukuRequestDTO;
+import apapTutorial.bacabaca.DTO.request.UpdateBukuRequestDTO;
+import apapTutorial.bacabaca.DTO.request.ReadBukuResponseDTO;
 import apapTutorial.bacabaca.model.Buku;
 import apapTutorial.bacabaca.service.BukuService;
+import apapTutorial.bacabaca.service.PenerbitService;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +22,11 @@ import java.util.UUID;
 @Controller
 public class BukuController {
     @Autowired
+    private BukuMapper bukuMapper;
+    @Autowired
     private BukuService bukuService;
+    @Autowired
+    private PenerbitService penerbitService;
 
     @GetMapping("/")
     public String home(){
@@ -23,70 +35,85 @@ public class BukuController {
 
     @GetMapping("buku/create")
     public String formAddBuku(Model model) {
-        var bukuDTO = new BukuDTO();
+        var bukuDTO = new CreateBukuRequestDTO();
 
         model.addAttribute("bukuDTO", bukuDTO);
-
+        model.addAttribute("listPenerbit", penerbitService.getAllPenerbit());
         return "form-create-buku";
     }
 
     @PostMapping("buku/create")
-    public String addBuku (@ModelAttribute BukuDTO bukuDTO, Model model) {
-        if (!bukuService.adaBuku(bukuDTO.getJudul())) {
-            UUID newId = UUID.randomUUID();
-
-            var buku = new Buku(newId, bukuDTO.getJudul(), bukuDTO.getPenulis(), bukuDTO.getTahunTerbit(), bukuDTO.getHarga());
-
-            bukuService.createBuku(buku);
-
-            model.addAttribute("id", buku.getId());
-
-            model.addAttribute("judul", buku.getJudul());
-
-            return "success-create-buku";
+    public String addBuku (@Valid @ModelAttribute CreateBukuRequestDTO bukuDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errorMessage.append(error.getDefaultMessage() + ", ");
+            }
+            model.addAttribute("errorMessage", errorMessage.toString());
+            return "error-view"; 
         }
-        else {
-            model.addAttribute("judul", bukuDTO.getJudul());
 
-            return "unsuccessful";
+        if (bukuService.isJudulExist(bukuDTO.getJudul())) {
+            var errorMessage = "Maaf, judul buku sudah ada";
+            model.addAttribute("errorMessage", errorMessage);
+            return "error-view";
         }
+        
+        var buku = bukuMapper.createBukuRequestDTOToBuku(bukuDTO);
+        bukuService.saveBuku(buku);
+
+        model.addAttribute("id", buku.getId());
+        model.addAttribute("judul", buku.getJudul());
+        return "success-create-buku";
     }
 
     @GetMapping("buku/{id}/update")
-    public String formUbahBuku(@PathVariable("id") UUID id, Model model) {
+    public String formUpdateBuku(@PathVariable("id") UUID id, Model model) {
         var buku = bukuService.getBukuById(id);
 
-        var bukuDTO = new BukuDTO(buku.getId(), buku.getJudul(), buku.getPenulis(), buku.getTahunTerbit(), buku.getHarga());
-
+        var bukuDTO = bukuMapper.bukuToUpdateBukuRequestDTO(buku);
+        
+        model.addAttribute("listPenerbit", penerbitService.getAllPenerbit());
         model.addAttribute("bukuDTO", bukuDTO);
 
         return "form-update-buku";
     }
 
     @PostMapping("buku/update")
-    public String ubahBuku (@ModelAttribute BukuDTO bukuDTO, Model model) {
-        if (!bukuService.adaBukuUpdate(bukuDTO.getJudul(), bukuDTO.getId())) {
-            var buku = bukuService.getBukuById(bukuDTO.getId());
-
-            buku.setJudul(bukuDTO.getJudul());
-            buku.setPenulis(bukuDTO.getPenulis());
-            buku.setTahunTerbit(bukuDTO.getTahunTerbit());
-            buku.setHarga(bukuDTO.getHarga());
-
-            model.addAttribute("id", bukuDTO.getId());
-
-            return "success-update-buku";
+    public String updateBuku (@Valid @ModelAttribute UpdateBukuRequestDTO bukuDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errorMessage.append(error.getDefaultMessage() + ", ");
+            }
+            model.addAttribute("errorMessage", errorMessage.toString());
+            return "error-view"; 
         }
-        else {
-            model.addAttribute("judul", bukuDTO.getJudul());
 
-            return "unsuccessful";
+        if (bukuService.isJudulExist(bukuDTO.getJudul(), bukuDTO.getId())) {
+            var errorMessage = "Maaf, judul buku sudah ada";
+            model.addAttribute("errorMessage", errorMessage);
+            return "error-view";
         }
+        
+        var bukuFromDto = bukuMapper.updateBukuRequestDTOToBuku(bukuDTO);
+        var buku = bukuService.updateBuku(bukuFromDto);
+
+        model.addAttribute("id", buku.getId());
+        model.addAttribute("judul", buku.getJudul());
+        return "success-update-buku";
     }
 
     @GetMapping("buku/viewall")
-    public String listBuku(Model model) {
-        List<Buku> listBuku = bukuService.getAllBuku();
+    public String listBuku(@RequestParam(name="judul", required=false) String judul, Model model) {
+        List<Buku> listBuku;
+
+        if (judul == null) {
+            listBuku = bukuService.findBukuByJudul("");
+        }
+        else {
+            listBuku = bukuService.findBukuByJudul(judul);
+        }
 
         model.addAttribute("listBuku", listBuku);
         return "viewall-buku";
@@ -106,7 +133,9 @@ public class BukuController {
 
         var buku = bukuService.getBukuById(id);
 
-        model.addAttribute("buku", buku);
+        var bukuDTO = bukuMapper.bukuToReadBukuResponseDTO(buku);
+
+        model.addAttribute("buku", bukuDTO);
         return "view-buku";
     }
 
@@ -116,7 +145,7 @@ public class BukuController {
         var buku = bukuService.getBukuById(id);
         bukuService.deleteBuku(buku);
 
-        model.addAttribute("id", buku.getId());
+        model.addAttribute("id", id);
         return "delete-buku";
     }
 }
