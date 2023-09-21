@@ -4,7 +4,7 @@
 
 * **Rama Tridigdaya** - *2106638532* - *C*
 ---
-## Tutorial 2
+## Tutorial 3
 ### What I have learned today
 1. Jelaskan apa itu ORM pada spring serta apa fungsi dan kegunaanya? 
    Object Relation Mapping (ORM) adalah sebuah framework yang dapat menjembatani perbedaan antara pemrograman berorientasi objek dengan yang berbasis data relasional. ORM berfungsi untuk memudahkan pengaksesan data dari basis data menggunakan objek Java. Bisa juga untuk mengotomatiskan proses mapping.
@@ -27,7 +27,7 @@ Jelaskan maksud dari tag @JoinTable tersebut beserta parameternya (name, joinCol
       id UUID NOT NULL,
       id_penulis BIGINT NOT NULL,
       PRIMARY KEY (id, id_penulis),
-      FOREIGN KEY (id_buku) REFERENCES buku (id),
+      FOREIGN KEY (id) REFERENCES buku (id),
       FOREIGN KEY (id_penulis) REFERENCES penulis (id_penulis)
    );
    ```
