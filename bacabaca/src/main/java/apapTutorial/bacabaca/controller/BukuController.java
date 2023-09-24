@@ -5,6 +5,7 @@ import apapTutorial.bacabaca.DTO.request.CreateBukuRequestDTO;
 import apapTutorial.bacabaca.DTO.request.UpdateBukuRequestDTO;
 import apapTutorial.bacabaca.DTO.request.ReadBukuResponseDTO;
 import apapTutorial.bacabaca.model.Buku;
+import apapTutorial.bacabaca.repository.BukuDb;
 import apapTutorial.bacabaca.service.BukuService;
 import apapTutorial.bacabaca.service.PenerbitService;
 import jakarta.validation.Valid;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.math.BigDecimal;
 
 @Controller
 public class BukuController {
@@ -105,15 +107,10 @@ public class BukuController {
     }
 
     @GetMapping("buku/viewall")
-    public String listBuku(@RequestParam(name="judul", required=false) String judul, Model model) {
+    public String listBuku(@RequestParam(name="judul", defaultValue = "") String judul, @RequestParam(name="hargaAtas", defaultValue = "9223372036854775807") BigDecimal hargaAtas, @RequestParam(name="hargaBawah", defaultValue = "0") BigDecimal hargaBawah,  Model model) {
         List<Buku> listBuku;
-
-        if (judul == null) {
-            listBuku = bukuService.findBukuByJudul("");
-        }
-        else {
-            listBuku = bukuService.findBukuByJudul(judul);
-        }
+        
+        listBuku = bukuService.findBukuByJudulAndHarga(judul, hargaBawah, hargaAtas);
 
         model.addAttribute("listBuku", listBuku);
         return "viewall-buku";
