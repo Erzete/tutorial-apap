@@ -4,6 +4,38 @@
 
 * **Rama Tridigdaya** - *2106638532* - *C*
 ---
+## Tutorial 3
+### What I have learned today
+1. Jelaskan apa itu ORM pada spring serta apa fungsi dan kegunaanya? 
+   Object Relation Mapping (ORM) adalah sebuah framework yang dapat menjembatani perbedaan antara pemrograman berorientasi objek dengan yang berbasis data relasional. ORM berfungsi untuk memudahkan pengaksesan data dari basis data menggunakan objek Java. Bisa juga untuk mengotomatiskan proses mapping.
+2. Jelaskan secara singkat apa itu dan kegunaan dari tag-tag dibawah ini. (@Entity, @Table, @Column)
+   1) Tag @Entity digunakan untuk mendeklarasikan sebuah kelas Java sebagai entitas database dan jadi representasi tabel
+   2) Tag @Table digunakan untuk mendeklarasikan nama tabel database yang akan digunakan untuk menyimpan data entitas
+   3) Tag @Column digunakan untuk mendeklarasikan kolom database yang akan digunakan untuk menyimpan data atribut entitas
+3. Pada relasi buku ke penulis, terdapat tag 
+```
+@JoinTable(name = "penulis_buku", joinColumns = @JoinColumn(name = "id"),
+       inverseJoinColumns = @JoinColumn(name = "id_penulis"))
+```
+Jelaskan maksud dari tag @JoinTable tersebut beserta parameternya (name, joinColumns, inverseJoinColumns) dan implementasinya pada database. 
+   Tag @JoinTable digunakan untuk mendeklarasikan tabel yang akan digunakan untuk menyimpan relasi antara dua entitas. 
+   1) name -> name digunakan untuk mendeklarasikan nama tabel 
+   2) joinColumns -> joinColumns digunakan untuk mendeklarasikan kolom di tabel baru yang akan digunakan untuk menunjuk ke entitas pertama. Dalam kasus ini, kolom id di tabel ini akan digunakan untuk menunjuk ke entitas Buku
+   3) inverseJoinColumns -> inverseJoinColumns digunakan untuk mendeklarasikan kolom-kolom di tabel pivot yang akan digunakan untuk menunjuk ke entitas kedua
+   ```
+   CREATE TABLE penulis_buku (
+      id UUID NOT NULL,
+      id_penulis BIGINT NOT NULL,
+      PRIMARY KEY (id, id_penulis),
+      FOREIGN KEY (id) REFERENCES buku (id),
+      FOREIGN KEY (id_penulis) REFERENCES penulis (id_penulis)
+   );
+   ```
+4. Bagaimana cara kerja dari dependensi java mapper, yaitu mapstruct?
+   MapStruct dapat digunakan untuk memetakan objek secara otomatis antara dua kelas/objek Java. Kita menandai interface pemetaan dengan anotasi @Mapper, lalu MapStruct menghasilkan kode pemetaan otomatis saat kompilasi, lalu akan dilakukan pemetaan objek secara otomatis dengan menggunakan metode instansi yang menggunakan interface yang punya anotasi tersebut
+5. Apa keuntungan dari implementasi soft delete?
+   Bisa simpan riwayat data, dipulihin, mencegah kesalahan ketika data direferensi, dan lainnya
+---
 ## Tutorial 2
 ### What I have learned today
 1. Apa itu DTO? Jelaskan kegunaannya pada proyek ini?
