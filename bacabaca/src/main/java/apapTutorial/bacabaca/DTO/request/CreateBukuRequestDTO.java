@@ -1,99 +1,85 @@
-package apapTutorial.bacabaca.model;
-import java.util.UUID;
+package apapTutorial.bacabaca.DTO.request;
 
-import org.hibernate.annotations.Where;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import apapTutorial.bacabaca.model.Penerbit;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "buku")
-@Where(clause = "is_deleted = false")
-public class Buku {
-    @Id
-    private UUID id = UUID.randomUUID();
-
-    @NotNull
-    @Size(max = 100)
-    @Column(name = "judul", nullable = false)
+@NoArgsConstructor
+@Data
+public class CreateBukuRequestDTO {
+    @NotBlank(message = "Judul tidak boleh kosong")
+    @Size(max = 100, message = "Judul maksimal 100 karakter")
     private String judul;
 
-    @NotNull
-    @Size(max = 4)
-    @Column(name = "tahun_terbit", nullable = false)
+    @NotBlank(message = "Tahun Terbit tidak boleh kosong")
+    @Pattern(regexp = "\\d{4}", message = "Tahun Terbit haruslah berupa 4 digit nomor")
     private String tahunTerbit;
-    
-    @NotNull
-    @Column(name = "harga", nullable = false)
+
+    @NotNull(message = "Harga tidak boleh kosong")
     private BigDecimal harga;
 
-    @NotNull
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted = false;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_penerbit", referencedColumnName = "idPenerbit")
+    @NotNull(message = "Penerbit tidak boleh kosong")
     private Penerbit penerbit;
-
-    @ManyToMany
-    @JoinTable(name = "penulis_buku", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_penulis"))
-    List<Penulis> listPenulis;
 }
-// public class Buku {
+// public class CreateBukuRequestDTO {
 //     private UUID id;
 //     private String judul;
 //     private String penulis;
 //     private String tahunTerbit;
 //     private int harga;
-    
-//     public Buku(UUID id, String judul, String penulis, String tahunTerbit, int harga) {
+
+//     public CreateBukuRequestDTO(){}
+
+//     public CreateBukuRequestDTO(UUID id, String judul, String penulis, String tahunTerbit, int harga) {
 //         this.id = id;
 //         this.judul = judul;
 //         this.penulis = penulis;
 //         this.tahunTerbit = tahunTerbit;
 //         this.harga = harga;
 //     }
-    
+
 //     public UUID getId() {
 //         return id;
 //     }
+
 //     public void setId(UUID id) {
 //         this.id = id;
 //     }
+
 //     public String getJudul() {
 //         return judul;
 //     }
+
 //     public void setJudul(String judul) {
 //         this.judul = judul;
 //     }
+
 //     public String getPenulis() {
 //         return penulis;
 //     }
+
 //     public void setPenulis(String penulis) {
 //         this.penulis = penulis;
 //     }
+
 //     public String getTahunTerbit() {
 //         return tahunTerbit;
 //     }
+
 //     public void setTahunTerbit(String tahunTerbit) {
 //         this.tahunTerbit = tahunTerbit;
 //     }
+
 //     public int getHarga() {
 //         return harga;
 //     }
+
 //     public void setHarga(int harga) {
 //         this.harga = harga;
 //     }
