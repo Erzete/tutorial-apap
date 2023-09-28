@@ -1,6 +1,5 @@
 package apapTutorial.bacabaca.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,8 +69,8 @@ public class BukuServiceImpl implements BukuService {
     }
 
     @Override
-    public List<Buku> findBukuByJudulAndHarga(String infix, BigDecimal hargaBawah, BigDecimal hargaAtas) {
-        return bukuDb.findByJudulContainingIgnoreCaseAndHargaBetweenOrderByJudul(infix, hargaBawah, hargaAtas);
+    public List<Buku> findBuku(String judul) {
+        return bukuDb.findByJudulContainingIgnoreCase(judul);
     }
 }
 // @Service

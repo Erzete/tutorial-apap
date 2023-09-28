@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8" />
+  <script src="https://kit.fontawesome.com/b398997f19.js" crossorigin="anonymous"></script>
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>  
+  <title>View All Buku</title>
+  <script>
+    $(document).ready( function () {
+        $('#myTable').DataTable( {
+            "columnDefs": [
+                { "orderable": false, "targets": -1 }
+            ],
+            "lengthMenu": [ 5, 10, 20 ]
+        }           
+        );
+    } );
+  </script>
+</head>
+
+<body>
+  <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+  <div class="container">
+    <div class="text-center pt-5">
+      <h2>Daftar Buku</h2>
+    </div>
+    <div class="text-center m-3">
+        <a type="button" class="btn btn-primary m-2" href="/buku/create">Tambah Buku</a>
+        <a type="button" class="btn btn-md btn-primary" href="/">Home</a>
+    </div>
+    <table id="myTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Judul</th>
+                <th>Nama Penulis</th>
+                <th>Nama Penerbit</th>
+                <th>Harga</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="buku, iterStatus : *{listBuku}">
+                <td th:text="${iterStatus.count}"></td>
+                <td th:text="${buku.judul}"></td>
+                <td>
+                    <span th:if="${buku.listPenulis != null and !buku.listPenulis.isEmpty()}"
+                          th:each="penulis, iterStatus: ${buku.listPenulis}">
+                        <span th:text="${penulis.namaPenulis}"></span>
+                        <span th:unless="${iterStatus.last}">, </span>
+                    </span>
+                    <span th:if="${buku.listPenulis == null or buku.listPenulis.isEmpty()}">-</span>
+                </td>
+                <td th:text="${buku.Penerbit.namaPenerbit}"></td>
+                <td th:text="'Rp'+${buku.harga}"></td>
+                <td>
+                    <a type="button" class="btn btn-md btn-primary" th:href="@{/buku/{id}(id=${buku.id})}">Detail</a>
+                    <a type="button" class="btn btn-md btn-warning" th:href="@{/buku/{id}/update(id=${buku.id})}">Ubah</a>
+                    <a type="button" class="btn btn-md btn-danger" th:href="@{/buku/{id}/delete(id=${buku.id})}">Hapus</a> 
+                </td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
