@@ -1,13 +1,14 @@
 package apapTutorial.bacabaca.DTO.request;
 
 import apapTutorial.bacabaca.model.Penerbit;
+import apapTutorial.bacabaca.model.Penulis;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +27,8 @@ public class CreateBukuRequestDTO {
 
     @NotNull(message = "Penerbit tidak boleh kosong")
     private Penerbit penerbit;
+    
+    private List<Penulis> listPenulis;
 }
 // public class CreateBukuRequestDTO {
 //     private UUID id;

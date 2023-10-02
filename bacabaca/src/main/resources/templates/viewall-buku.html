@@ -3,13 +3,14 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <script src="https://kit.fontawesome.com/b398997f19.js" crossorigin="anonymous"></script>
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
   <title>View All Buku</title>
 </head>
 
 <body>
+  <nav th:replace="~{fragments/navbar :: navbar}"></nav>
   <div class="container">
     <div class="text-center pt-5">
       <h2>Daftar Buku</h2>
@@ -30,8 +31,12 @@
           <div class="card-body">
             <h5 th:text="${buku.judul}" class="card-title"></h5>
             <br>
-            <h6 th:if="${buku.listPenulis.size} != 0" th:text="${buku.listPenulis}" class="card-subtitle mb-2"></h6>
-            <h6 th:unless="${buku.listPenulis.size} != 0" class="card-subtitle mb-2">Penulis belum ter-record</h6>
+            <div class="d-flex">
+            <div th:each="penulis, iterationStatus: ${buku.listPenulis}">
+              <h6 th:if="${iterationStatus.last}" class="pe-2" th:text="${penulis.namaPenulis}"></h6>
+              <h6 th:unless="${iterationStatus.last}" class="pe-2" th:text="${penulis.namaPenulis}+ ', '"></h6>
+            </div>
+            </div>
             <h6 th:text="'Penerbit : '+${buku.Penerbit.namaPenerbit}"></h6>
             <p th:text="'Harga : Rp'+${buku.harga}" class="card-text text-muted"></p>
             <a type="button" class="btn btn-md btn-primary" th:href="@{/buku/{id}(id=${buku.id})}">Detail</a>
