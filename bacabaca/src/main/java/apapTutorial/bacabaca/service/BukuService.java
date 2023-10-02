@@ -1,5 +1,6 @@
 package apapTutorial.bacabaca.service;
 import apapTutorial.bacabaca.model.Buku;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ public interface BukuService {
     Buku updateBuku(Buku buku);
     void deleteBuku(Buku buku);
     List<Buku> findBukuByJudul(String judul);
+    List<Buku> findBuku(String judul);
 }
 // public interface BukuService {
 //     void createBuku(Buku buku);

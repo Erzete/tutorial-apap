@@ -4,6 +4,33 @@
 
 * **Rama Tridigdaya** - *2106638532* - *C*
 ---
+## Tutorial 4
+### What I have learned today
+1. Apa itu xmlns? Jawab dengan singkat dan padat.
+   xmlns adalah atribut yang digunakan untuk mendefinisikan namespace dari elemen HTML. Namespace digunakan untuk membedakan elemen HTML dari elemen HTML yang berasal dari namespace lain.
+2. Jelaskan perbedaan th:include dan th:replace!
+   1) th:include akan memasukkan konten dari fragment ke dalam tag host, sedangkan
+   2) th:replace akan mengganti tag host dengan konten dari fragment. 
+3. Kapan sebaiknya kita menggunakan static files dibandingkan dengan file eksternal menggunakan link?
+   Ketika kita menggunakan file tersebut secara berulang-ulang di banyak halaman dan tidak berubah-ubah isinya (secara dinamis)
+4. Jelaskan caramu menyelesaikan latihan no 2
+   Kurang lebih saya copy kode yang similar yang ada pada bagian Panduan. Perbedaannya mungkin di controller sekarang pake updateBukuRequestDTO. Selain itu untuk memastikan bahwa isi listPenulis pada Buku terlihat kita iterasi list pada select.
+   ```
+   <select th:field="*{listPenulis[__${iterationStatus.index}__].idPenulis}" class="form-control">
+   ```
+   Dan masukkan value-nya pada option
+   ```
+   <option th:value="${penulis.idPenulis}" th:text="${penulis.namaPenulis}"></option>
+   ```
+   Selain dari itu, kodenya kurang lebih sama.
+5. Jelaskan apa itu pagination!
+   Pagination adalah fitur yang digunakan untuk membagi data dalam jumlah besar menjadi beberapa halaman untuk memudahkan pengguna dalam membaca data.
+6. Sebutkan salah satu skenario yang mengharuskan adanya perbedaan dev dan prod dan jelaskan alasannya!
+   Misalkan kita ingin membangun fitur baru yang belum dites atau menambahkan object baru, untuk menghindari adanya perubahan tidak sengaja yang menyebabkan aplikasi tersebut error ketika digunakan oleh user, maka akan lebih baik untuk menggunakan environment dev. Baru setelah kita yakin bahwa fitur tersebut sudah stable/sudah bisa digunakan dengan baik baru kita deploy ke prod env.
+7. Lampirkan screenshot kalau kamu sudah berhasil membuat user untuk environment production serta bukti bahwa kamu sudah berhasil mengakses database production dengan user tersebut!
+   ![Buat User Prod](https://i.imgur.com/wXdd59Z.png)
+   ![Buka DB Prod](https://i.imgur.com/I7wrCed.png)
+---
 ## Tutorial 3
 ### What I have learned today
 1. Jelaskan apa itu ORM pada spring serta apa fungsi dan kegunaanya? 

@@ -67,6 +67,11 @@ public class BukuServiceImpl implements BukuService {
     public List<Buku> findBukuByJudul(String judul) {
         return bukuDb.findByJudulContainingIgnoreCaseOrderByJudul(judul);
     }
+
+    @Override
+    public List<Buku> findBuku(String judul) {
+        return bukuDb.findByJudulContainingIgnoreCase(judul);
+    }
 }
 // @Service
 // public class BukuServiceImpl implements BukuService {
