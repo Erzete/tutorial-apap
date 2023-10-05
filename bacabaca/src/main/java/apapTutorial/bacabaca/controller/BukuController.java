@@ -17,9 +17,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.javafaker.Book;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Calendar;
+import java.util.HashMap;
 
 @Controller
 public class BukuController {
@@ -212,5 +224,13 @@ public class BukuController {
 
         model.addAttribute("id", id);
         return "delete-buku";
+    }
+
+
+    @GetMapping(value = "buku/chart") 
+    public String chartBuku(Model model) {
+        var bukuPopuler = bukuService.getMonthPopularBook();
+        model.addAttribute("bukuPopuler", bukuPopuler);
+        return "view-buku-chart";
     }
 }

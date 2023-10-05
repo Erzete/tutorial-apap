@@ -12,7 +12,7 @@
   <nav th:replace="~{fragments/navbar :: navbar}"></nav>
   <div class="container">
     <div class="text-center pt-5">
-      <h2 clasa>Informasi Buku</h2>
+      <h2 class>Informasi Buku</h2>
     </div>
     <div class="row justify-content-center">
       <div class="card" style="width: 30rem;">
@@ -32,6 +32,19 @@
 
             <p class="card-text m-0"><b>Nama Penerbit</b></p>
             <p class="card-text" th:text="${buku.namaPenerbit}"></p>
+          
+            <table class="table">
+              <thead>
+                <tr>
+                    <th>Nama Penulis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="penulis, iterationStatus : ${buku.listPenulis}">
+                  <td th:text="${penulis.namaPenulis}" th:style="${iterationStatus.odd} ? 'color: blue' : 'color: red'"></td>
+                </tr>
+              </tbody>
+            </table>
 
           </div>
         </div>
