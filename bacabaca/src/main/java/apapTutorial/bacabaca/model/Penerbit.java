@@ -10,12 +10,15 @@ import lombok.Setter;
 
 import java.util.List;
 
+import org.hibernate.annotations.Where;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "penerbit")
+@Where(clause = "is_deleted = false")
 public class Penerbit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +32,10 @@ public class Penerbit {
     @NotNull
     @Column(name = "alamat", nullable = false)
     private String alamat;
+
+    @NotNull
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
 
     @NotNull
     @Column(name = "email", nullable = false)

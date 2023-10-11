@@ -6,6 +6,21 @@
 ---
 ## Tutorial 4
 ### What I have learned today
+1. Apa itu Postman? Apa kegunaannya?
+   Postman merupakan platform pengembangan API yang dapat digunakan untuk mengembangkan, menguji, menggunakan, dan mendokumentasikan API. 
+2. Apa yang terjadi ketika kita tidak menggunakan @JsonIgnoreProperties dan @JsonProperty pada model Buku dan Penulis? apabila terjadi error, mengapa hal tersebut dapat terjadi?
+   Jika tidak menggunakan @JsonIgnoreProperties maka kemungkinan data dari model akan ditampilkan secara lengkap sedangkan @JsonProperty jika tidak digunakan maka bisa saja terjadi error karena ketika kita melakukan serialization/deserialization bisa saja atribut pada object tersebut tidak sama dengan field name yang ada pada JSON
+3. Pada tutorial ini, kita mencoba untuk memanggil data dengan menggunakan method GET. Namun, apakah kita dapat memanggil data dengan method lainya, seperti POST? Jelaskan pendapat kalian?
+   Ya bisa saja untuk mengambil data baru atau yang baru perbaharui atau yang dihapus bisa dengan menggunakan method POST.
+4. Selain method GET dan POST, sebutkan dan jelaskan secara singkat HTTP request methods lainnya yang dapat kita gunakan!
+   1) PUT -> Buat memperbaharui data yang sudah ada (seluruh atributnya)
+   2) PATCH -> Mirip kayak PUT memperbaharui data tapi cuma sebagian saja
+   3) DELETE -> Digunakan untuk menghapus data dari server
+5. Apa kegunaan atribut WebClient?
+   Atribut WebClient digunakan untuk membuat instance dari kelas WebClient. Kelas WebClient digunakan untuk mengirim permintaan HTTP ke server. Setelah instance dari kelas WebClient dibuat, kita dapat menggunakannya untuk mengirim permintaan HTTP.
+---
+## Tutorial 4
+### What I have learned today
 1. Apa itu xmlns? Jawab dengan singkat dan padat.
    xmlns adalah atribut yang digunakan untuk mendefinisikan namespace dari elemen HTML. Namespace digunakan untuk membedakan elemen HTML dari elemen HTML yang berasal dari namespace lain.
 2. Jelaskan perbedaan th:include dan th:replace!

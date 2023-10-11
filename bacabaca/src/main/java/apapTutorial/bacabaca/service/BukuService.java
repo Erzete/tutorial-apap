@@ -2,6 +2,7 @@ package apapTutorial.bacabaca.service;
 import apapTutorial.bacabaca.model.Buku;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface BukuService {
@@ -13,7 +14,7 @@ public interface BukuService {
     Buku updateBuku(Buku buku);
     void deleteBuku(Buku buku);
     List<Buku> findBukuByJudul(String judul);
-    List<Buku> findBuku(String judul);
+    Map<String, Float> getMonthPopularBook();
 }
 // public interface BukuService {
 //     void createBuku(Buku buku);
