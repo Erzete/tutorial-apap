@@ -1,6 +1,8 @@
 package apapTutorial.bacabaca.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import apapTutorial.bacabaca.model.Penerbit;
 import apapTutorial.bacabaca.repository.PenerbitDb;
@@ -27,4 +29,18 @@ public class PenerbitServiceImpl implements PenerbitService {
         return penerbitDb.findById(idPenerbit).get();
     }
 
+    @Override
+    public Map<String, Integer> getPublisherBookCounts() {
+        List<Penerbit> listPenerbit = getAllPenerbit();
+        Map<String, Integer> publisherBookCounts = new HashMap<>();
+
+        for (Penerbit penerbit : listPenerbit) {
+            String publisherName = penerbit.getNamaPenerbit();
+            int bookCount = penerbit.getListBuku().size();
+
+            publisherBookCounts.put(publisherName, bookCount);
+        }
+
+        return publisherBookCounts;
+    }
 }

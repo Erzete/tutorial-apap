@@ -3,6 +3,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,6 +24,7 @@ import java.util.List;
 @Entity
 @Table(name = "buku")
 @Where(clause = "is_deleted = false")
+@JsonIgnoreProperties(value = {"penerbit"}, allowSetters = true)
 public class Buku {
     @Id
     private UUID id = UUID.randomUUID();
