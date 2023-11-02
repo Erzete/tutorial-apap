@@ -10,11 +10,13 @@ import apapTutorial.bacabaca.restservice.BukuRestService;
 import jakarta.validation.Valid;
 import reactor.core.publisher.Mono;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -24,6 +26,7 @@ import org.springframework.http.HttpMethod;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.web.server.ResponseStatusException;
@@ -53,7 +56,12 @@ public class BukuRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id Buku " + id + " not found");
         }
     }
-    
+
+    @GetMapping("buku/search")
+    public List<Buku> retrieveBukuJudul(@RequestParam("query") String judul, Model model) {
+        return bukuRestService.retrieveBukuByJudul(judul);
+    }   
+
     @PostMapping(value="/buku/create")
     public Buku restAddBuku(@Valid @RequestBody CreateBukuRequestDTO bukuDTO, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -63,6 +71,26 @@ public class BukuRestController {
             bukuRestService.createRestBuku(buku);
             return buku;
         }
+    }
+
+    @PutMapping(value="/buku")
+    public Buku restUpdateBuku(@Valid @RequestBody Buku buku, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field");
+        } else {
+            bukuRestService.updateRestBuku(buku);
+            return buku;
+        }
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity random() {
+        Random random = new Random();
+        var theBool = random.nextBoolean();
+        if (theBool) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
     
     @GetMapping(value = "/buku/status")

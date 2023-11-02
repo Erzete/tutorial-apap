@@ -27,6 +27,16 @@ public class BukuRestServiceImpl implements BukuRestService {
     }
 
     @Override
+    public void updateRestBuku(Buku buku) {
+        bukuDb.save(buku);
+    }
+
+    @Override
+    public List<Buku> retrieveBukuByJudul(String judul) {
+        return bukuDb.findByJudulContainingIgnoreCaseOrderByJudul(judul);
+    }
+    
+    @Override
     public List<Buku> retrieveRestAllBuku() {
         return bukuDb.findAll();
     }
