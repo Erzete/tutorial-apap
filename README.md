@@ -12,7 +12,7 @@
    "rebase --continue" digunakan untuk melanjutkan proses rebase sebelumnya yang belum berhasil/selesai "rebase --skip" digunakan untuk melewatkan/abaikan conflict/bagian yang bermasalah ketika melakukan proses rebase sedangkan "rebase --abort" digunakan untuk membatalkan rebase dan balik ke keadaan sebelum rebase
 3. Apa perbedaan Git Merge dengan Git Rebase? Buatlah/carilah ilustrasi yang dapat menggambarkan perbedaanya!
    Kalau Merge dia preserve/melestarikan riwayat commit sedangkan kalau rebase dia akan mengubah riwayat commit. Log commit pada rebase akan linear dan ketika di-rebase maka riwayat tersebut akan diubah sehingga menjadi seperti itu.
-   ![Git Merge vs Rebase](https://media.licdn.com/dms/image/D4E12AQEqaE_raoYisA/article-cover_image-shrink_720_1280/0/1667575431379?e=2147483647&v=beta&t=0iuxrrM4PEVSTcM0uhxvyn3JT2lUm_m9949AZamj7zw)
+   ![Git Merge vs Rebase](https://i.imgur.com/3QOfdze.png)
 4. Mengapa hal pada langkah no 4 bisa terjadi? Mengapa git stash menjadi solusinya?
    Hal tersebut dapat terjadi karena pada branch feature-stash-1 terdapat perubahan yang belum kita commit sehingga kita tidak bisa melakukan switch branch. Git Stash menjadi solusi karena git stash dapat menyimpan sementara perubahan yang belum di-commit pada stash area untuk nantinya dapat kita pop/recover ketika kembali ke branch tersebut.
 5. Sebutkan dan jelaskan tiga tipe dari Git Reset!
@@ -21,7 +21,9 @@
    3) "--hard" mengatur ulang HEAD ke commit tertentu dan akan mengembalikan semua perubahan yang telah dibuat di working directory & staging area
 6. Apa itu git revert? Apa perbedaannya dengan git reset?
    Git revert akan membuat commit baru yang isinya adalah menghapus perubahan yang sudah ada dan mempertahankan commit yang di-revert sedangkan git reset tidak membuat commit baru melainkan langsung kembali/ke-reset ke commit pilihannya (menghilangkan commit yang setelah commit pilihan tersebut).
-7. 
+7. Buatlah grafik yang menggambarkan alur commit pada bagian Git Flow and Branching ini serta jelaskan! Grafik dapat berupa tulis tangan maupun menggunakan software.
+   ![Grafik Git Flow](https://i.imgur.com/fNgrUJp.png)
+   Dari development kita branch ke feature-a commit "edit base.html" setelah itu kita merge ke development. Dari development kita juga branch ke feature-b lalu commit "edit base.html" kita akan melakukan rebase tapi ternyata ada conflict sehingga harus kita resolve terlebih dahulu setelah resolve di-commit maka rebase akan berlanjut pada branch feature-b. Setelah selesai rebase maka bisa kita merge feature-b ke development
 8. Apa kegunaan dari langkah di atas (Add HTTP Header Manager)?
    Langkah di atas untuk menambahkan HTTP header manager dan mengisi name = "content-type" dan value = "application/json" adalah untuk memastikan bahwa JMeter akan menerima/menghasilkan data dalam format JSON dan bukan dalam format lainnya sehingga dapat kita lihat hasilnya. Langkah ini pada dasarnya memberi tahu server tentang jenis konten yang akan dikirim/diterima.
 9. Apa itu JSON Extractor? Sebutkan semua kegunaannya di Test Plan ini!
