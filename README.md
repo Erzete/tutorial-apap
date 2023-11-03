@@ -4,9 +4,50 @@
 
 * **Rama Tridigdaya** - *2106638532* - *C*
 ---
-## Tutorial 5
+## Tutorial 6
 ### What I have learned today
+1. Apa yang menjadi penyebab dari CONFLICT tersebut? 
+   Yang menjadi penyebab dari conflict tersebut adalah adanya perubahan pada baris yang sama pada masing-masing branch yang ingin di-merge tersebut. Mereka sama-sama mengubah baris ke 5-7 pada file index.html sehingga terjadi conflict ketika di-merge.
+2. Jelaskan perbedaan dari "rebase –continue", "rebase –skip", dan "rebase –abort"!
+   "rebase --continue" digunakan untuk melanjutkan proses rebase sebelumnya yang belum berhasil/selesai "rebase --skip" digunakan untuk melewatkan/abaikan conflict/bagian yang bermasalah ketika melakukan proses rebase sedangkan "rebase --abort" digunakan untuk membatalkan rebase dan balik ke keadaan sebelum rebase
+3. Apa perbedaan Git Merge dengan Git Rebase? Buatlah/carilah ilustrasi yang dapat menggambarkan perbedaanya!
+   Kalau Merge dia preserve/melestarikan riwayat commit sedangkan kalau rebase dia akan mengubah riwayat commit. Log commit pada rebase akan linear dan ketika di-rebase maka riwayat tersebut akan diubah sehingga menjadi seperti itu.
+   ![Git Merge vs Rebase](https://media.licdn.com/dms/image/D4E12AQEqaE_raoYisA/article-cover_image-shrink_720_1280/0/1667575431379?e=2147483647&v=beta&t=0iuxrrM4PEVSTcM0uhxvyn3JT2lUm_m9949AZamj7zw)
+4. Mengapa hal pada langkah no 4 bisa terjadi? Mengapa git stash menjadi solusinya?
+   Hal tersebut dapat terjadi karena pada branch feature-stash-1 terdapat perubahan yang belum kita commit sehingga kita tidak bisa melakukan switch branch. Git Stash menjadi solusi karena git stash dapat menyimpan sementara perubahan yang belum di-commit pada stash area untuk nantinya dapat kita pop/recover ketika kembali ke branch tersebut.
+5. Sebutkan dan jelaskan tiga tipe dari Git Reset!
+   1) "--soft" mengatur ulang HEAD ke commit tertentu tetapi perubahan yang telah dibuat tetap akan terlihat di working directory dan staging area walaupun tidak akan di-commit
+   2) "--mixed" mengatur ulang HEAD ke commit tertentu dan akan mengembalikan perubahan yang dibuat di staging area ke keadaan sebelum commit tersebut. Akan tetapi, perubahan yang ada di working directory tetap ada
+   3) "--hard" mengatur ulang HEAD ke commit tertentu dan akan mengembalikan semua perubahan yang telah dibuat di working directory & staging area
+6. Apa itu git revert? Apa perbedaannya dengan git reset?
+   Git revert akan membuat commit baru yang isinya adalah menghapus perubahan yang sudah ada dan mempertahankan commit yang di-revert sedangkan git reset tidak membuat commit baru melainkan langsung kembali/ke-reset ke commit pilihannya (menghilangkan commit yang setelah commit pilihan tersebut).
+7. 
+8. Apa kegunaan dari langkah di atas (Add HTTP Header Manager)?
+   Langkah di atas untuk menambahkan HTTP header manager dan mengisi name = "content-type" dan value = "application/json" adalah untuk memastikan bahwa JMeter akan menerima/menghasilkan data dalam format JSON dan bukan dalam format lainnya sehingga dapat kita lihat hasilnya. Langkah ini pada dasarnya memberi tahu server tentang jenis konten yang akan dikirim/diterima.
+9. Apa itu JSON Extractor? Sebutkan semua kegunaannya di Test Plan ini!
+   JSON Extractor adalah komponen pada JMeter yang dapat digunakan untuk mendapatkan/ekstrak data dari JSON yang telah dibuat/didapatkan. Pada kasus test plan ini kita ingin mendapatkan idBuku yang terdapat pada JSON yang dibuat setelah proses HTTP Request Get Buku. Oleh karena itu, kita akan menggunakan JSON Extractor untuk mengambil idBuku yang dibuat tersebut. idBuku ini kemudian nantinya akan digunakan dalam proses selanjutnya yaitu HTTP Request Update Buku yang dapat kita lihat pada JSON Assertion Id.
+10. Apa itu Assertions dalam JMeter? Sebutkan contoh 3 Assertions dan kegunaannya!
+   Assertions pada JMEter adalah komponen/alat yang digunakan untuk memvalidasi response dari suatu request yang kita send ke server. 3 Contoh Assertion:
+   1. Response Assertion -> Memeriksa apakah response yang didapatkan dari server cocok dengan pola atau teks yang ingin kita uji
+   2. Size Assertion -> Memeriksa apakah ukuran response server sesuai dengan yang dites (misal apakah lebih besar/kecil/sama dengan ukuran bytes yang kita ingin uji)
+   3. Duration Assertion -> Memeriksa apakah response server didapatkan pada maksimal batas waktu yang kita inginkan (misal 1929 ms)
+11. Apa itu Number of Threads dan Ramp-up Period? Apa hubungan antar keduanya?
+   Number of Thread adalah jumlah virtual user yang kita expect untuk mengakses server dan menjalankan steps yang telah kita set di JMeter-nya sedangkan Ramp-up period adalah batas/periode waktu di mana JMeter harus meningkatkan jumlah virtual user dari 0 ke jumlah Number of Thread yang sudah kita tentukan. Hubungannya seperti itu, jika ramp-up period pendek maka kemungkinan thread akan dimulai secara bersamaan jika panjang maka akan dimulai secara bertahap
+12. Temuan menarik:
+   Test ini bukan yang pertama kali saya jalankan tapi mungkin ini yang menurut saya paling "sempurna" dibandingkan tes-tes sebelumnya. Dpaat dilihat dalam summary report, total error pada HTTP request hanya berjumlah 9.76% dari total yang dijalankan dan itupun hanya error dari HTTP Request Random Request yang tentunya memiliki presentase 50-50 untuk gagal/berhasil. Selain dari itu, HTTP request-nya dapat berjalan tanpa adanya error. Dilihat dari throughput ternyata yang paling baik adalah HTTP request Create Buku yang throughput-nya adalah 6.8/sec.
 
+   HTTP request Search Buku sepertinya menjadi HTTP request dengan ukuran terbesar yaitu mencapai 249258.5 Bytes rata-rata, jauh dibandingkan HTTP request yang lainnya. Hal ini tentu normal karena kita memiliki 1000++ buku yang akan dicari. Test Plan ini memiliki 5000 sampel dengan throughput mencapai 1.275.776/menit dan rata-rata 17649 ms dan ukuran 50068 Bytes.
+   ![Results Tree](https://i.imgur.com/0qNomuv.png)
+   ![Summary Report](https://i.imgur.com/CZIuUZf.png)
+   ![Graph Results](https://i.imgur.com/HyVydUf.png)
+   ![Assertion Result](https://i.imgur.com/PGCpzBp.png)
+13. Jconsole, temuan menarik:
+   Screenshot di bawah diambil ketika sedang menjalankan test pada JMeter, bisa dilihat semua grafik cenderung naik. Pada grafik CPU usage kita melihat grafik naik tajam ke atas ketika baru menjalankan tesnya namun turun ke bawah (walaupun tetap naik dari awal) setelah beberapa saat hal itu berarti menunjukkan bahwa beban kerja CPU yang dihasilkan dari melakukan testing besar di awal namun cenderung rendah dan fluaktif setelahnya dengan penggunaan 2.2%. Pada Memory Usage grafik juga fluaktif naik turun walaupun tentunya tetap naik dari awal hal ini berarti penggunaan memory ketika melakukan test plan fluaktif sekitar 200 - 600 Mb.
+
+   Pada dua grafik lainnya cenderung datar/tidak fluaktif (setelah naik dari awal) jika dibandingkan dengan 2 grafik sebelumnya. Pada grafik Thread ini menujukkan jumlah thread yang sedang berjalan pada JVM jika kita lihat maka pada saat di-screenshot JVM sedang menjalankan 239 threads dengan peak-nya yaitu 242 threads. Pada classes juga sama seperti sebelumnya datar, kita juga dapat melihat bahwa terdapat 17.100 total kelas yang sedang dimuat pada JVM dan 56 kelas yang sudah dihapus dari JVM.
+   ![Jconsole](https://i.imgur.com/ly8MIW1.png)
+14. Apa itu Load Testing? Buatlah kesimpulan dari pengerjaan tutorial JMeter & JConsole ini.
+   Load testing adalah salah satu tipe/metode pengujian yang dapat kita terapkan pada aplikasi/perangkat lunak. Pengujian ini bertujuan untuk menguji apakah sebuah aplikasi dapat berjalan dengan baik di bawah beban/tekanan yang berat atau di luar kapasitas biasanya. Dengan hasil load testing kita dapat menentukan batas kemampuan, responsiveness sistem, dan juga identifikasi maslaah yang mungkin timbul ketika banyak pengguna. Kesimpulan dari pengerjaan tutorial ini ternyata aplikasi dapat berjalan dengan baik di bawah load testing.
 ---
 ## Tutorial 5
 ### What I have learned today
