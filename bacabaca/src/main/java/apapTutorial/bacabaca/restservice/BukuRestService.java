@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface BukuRestService {
     void createRestBuku(Buku buku);
+    void updateRestBuku(Buku buku);
+    List<Buku> retrieveBukuByJudul(String judul);
     List<Buku> retrieveRestAllBuku();
     Buku getRestBukuById(UUID id);
     Mono<String> getStatus();
