@@ -30,7 +30,6 @@ public class BacabacaApplication {
 	CommandLineRunner run(BukuService bukuService, PenerbitService penerbitService, BukuMapper bukuMapper, PenerbitMapper penerbitMapper) {
 		return args -> {
 			var faker = new Faker(new Locale("in-ID"));
-
 			var bukuDTO = new CreateBukuRequestDTO();
 			var fakeBook = faker.book();
 			var fakeDate = faker.date();
