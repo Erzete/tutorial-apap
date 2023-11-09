@@ -63,7 +63,7 @@ publish-image:
     script:
         - echo "Publishing Docker Image..."
         - echo $REGISTRY_SERVER
-        - echo $REGISTRY_PASSWORD | docker login --usernamev$REGISTRY_USERNAME --password-stdin $REGISTRY_SERVER
+        - echo $REGISTRY_PASSWORD | docker login --username $REGISTRY_USERNAME --password-stdin $REGISTRY_SERVER
         - docker push $REGISTRY_SERVER/rama.tridigdaya/apap-209:$CI_COMMIT_SHORT_SHA
         - docker push $REGISTRY_SERVER/rama.tridigdaya/apap-209:latest
 
