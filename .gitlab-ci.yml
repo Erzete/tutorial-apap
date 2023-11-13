@@ -2,23 +2,19 @@ default:
     tags:
         - apap
 
-
 workflow:
     rules:
         - if: $CI_COMMIT_TAG
           when: never
-        - if: $CI_COMMIT_BRANCH == 'feat/tutorial-7-bacabaca’ 
-
+        - if: $CI_COMMIT_BRANCH == 'feat/tutorial-7-bacabaca' 
 
 before_script:
     - docker info
     - javac -version
 
-
 variables:
     IMAGE_OPENJDK_GRADLE: gradle:7.3.3-jdk17-alpine
     IMAGE_DOCKER_DIND: docker:20.10.16
-
 
 stages:
     - build
@@ -26,7 +22,6 @@ stages:
     - build-image
     - publish-image
     - deploy
-
 
 build:
     image: $IMAGE_OPENJDK_GRADLE
@@ -49,14 +44,12 @@ build:
             - bacabaca/build/libs/bacabaca-0.0.1-SNAPSHOT.jar
             - bacabaca/.env
 
-
 build-image:
     stage: build-image
     script:
         - echo "Building Docker Image..."
         - docker build -t $REGISTRY_SERVER/rama.tridigdaya/apap-209:$CI_COMMIT_SHORT_SHA .
         - docker build -t $REGISTRY_SERVER/rama.tridigdaya/apap-209:latest .
-
 
 publish-image:
     stage: publish-image
@@ -67,7 +60,6 @@ publish-image:
         - docker push $REGISTRY_SERVER/rama.tridigdaya/apap-209:$CI_COMMIT_SHORT_SHA
         - docker push $REGISTRY_SERVER/rama.tridigdaya/apap-209:latest
 
-
 deploy:
     stage: deploy
     before_script:
@@ -77,7 +69,6 @@ deploy:
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-
 
     script:
         - echo "Deploy to server..."
