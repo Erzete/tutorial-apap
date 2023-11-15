@@ -4,6 +4,67 @@
 
 * **Rama Tridigdaya** - *2106638532* - *C*
 ---
+## Tutorial 7
+### What I have learned today
+1. Apa itu Dockerfile dan docker-compose.yaml? Apa fungsinya?
+   Dockerfile itu merupakan file yang digunakan untuk membangun image Docker, image Docker ini untuk menjalankan aplikasi yang kita buat. Sedangkan docker-compose.yml merupakan file yang digunakan untuk mengkonfigurasi multi image/container Docker. Konfigurasinya antara lain seperti port web/db yang digunakan, environment, volume, dan lain sebagainya.
+2. Screenshot hasil perubahan anda. Setelah anda menyelesaikan tutorial ini, menurut anda, mengapa kita perlu mengganti port?
+   ![Ganti port](https://i.imgur.com/uA8wqH9.png)
+   Beberapa port sudah ada yang digunakan oleh aplikasi lain biasanya. Walaupun tentunya dalam konteks tutorial ini biar ga ada konflik port sama aplikasi orang lain pas nanti di deploy.
+3. Apa saja yang terjadi di langkah ini?
+   Langkah yang mana? Langkah docker-compose up tentunya kita akan membangun (up) image Docker/layanan-layanan (termasuk database) yang telah kita konfigurasikan pada docker-compose.yaml dan dockerfile nya sehingga kita dapat menggunakannya
+4. Sertakan screenshot container yang sedang berjalan (versi gui atau cli, pilih salah satu). Apa itu docker images, docker container, dan docker volume?
+   ![Docker Screenshot](https://i.imgur.com/WspEJ1t.png)
+   Docker images -> Instruksi hal-hal yang dibutuhkan seperti kode, environment, dependensi dan lainnya yang digunakan untuk menjalankan aplikasi. Docker Container -> Dibuat dari docker image, sebuah space teriosalisasi yang menjadi tempat bagi aplikasi untuk berjalan sesuai env yang telah dibuat tanpa menganggu aplikasi lainnya. Docker volume -> Penyimpanan data pada docker
+5. Apa perbedaan docker-compose down dan docker stop?
+   docker-compose down menghapus container sedangkan docker stop hanya stop saja tapi tidak dihapus
+6. Sertakan screenshot mengakses laman kirti milik anda melalui browser (seperti screenshot di atas)
+   ![Kirti](https://i.imgur.com/3g1wLRF.png)
+7. Ceritakan pengalaman anda melakukan deployment ke Kirti. Kendala apa yang anda alami?
+   Tentunya ini adalah kali pertama saya deploy di Kirti, tidak ada kendala apapun yang saya alami.
+8. (gada pertanyaannya)
+9. Buka container docker Anda, lalu screenshot. Apa perbedaan tampilan container sekarang dengan tampilan container pada langkah tutorial docker di awal tadi?
+   ![Image Baru](https://i.imgur.com/ut8xw0B.png)
+   Terdapat Docker Image baru yang bernama web2-1
+10. Sertakan screenshot tampilan web ketika pertama kali menjalankan localhost:9090/port dan tampilan web ketika halaman di-refresh.
+   ![Web Awal](https://i.imgur.com/QFMRiFd.png)
+   ![WebRefresh](https://i.imgur.com/9PdI76C.png)
+11. Apa yang dimaksud load balancing?  Pada langkah keberapa kita mengatur konfigurasi untuk load balancing? Jelaskan blok baris yang mengatur hal tersebut.
+   Dalam load balancing kita ingin membagikan beban kerja aplikasi ke beberapa port/jaringan/server yang berbeda. Pada langkah ke-10 kita mengubah nginx.conf upstream homepage menjadi 2 server yaitu server web1 dan web2 hal ini yang disebut load balancing.
+      upstream homepage {
+            server localhost:10209;
+            server localhost:10210;
+     }
+12. Apa yang dimaksud reverse proxy?  Pada langkah keberapa kita mengatur konfigurasi untuk reverse proxy? Jelaskan baris yang mengatur hal tersebut dan jelaskan kegunaannya dalam pengerjaan tugas kelompok nanti.
+   Reverse proxy adalah dimana terdapat 1 server yang menjadi perantara untuk meneruskan permintaan client ke server-server tujuan. 
+   location / {
+            proxy_pass "http://homepage";
+        }
+   Di sini semua permintaan yang masuk akan diteruskan ke server "homepage" yang sudah dikonfigurasikan di atas
+13. Kendala apa yang anda hadapi ketika melakukan tutorial bagian nginx?
+   Tidak ada selain kirain salah ternyata harus nambahin /port di akhir
+14. Apa fungsi dari SSH keys yang Anda buat dengan menggunakan ssh-keygen? Apa perbedaan antara file ~/.ssh/deployer_apap.pub dan ~/.ssh/deployer_apap ?
+   SSH keys tentunya buat autentikasi dan nanti kita akan men-deploy menggunakan CI/CD menggunakan Gitlab dan Gitlab nya tnetu akan membutuhkan key yang kita buat untuk dapat mengakses dan kemudian men-deploy aplikasi secara otomatis. Perbedaan dari .pub dan bukan, .pub itu kunci PUBlik sedangkan yang ga ada .pub itu kunci private yang tentunya jangan disebar.
+15. Apa perbedaan antara GitLab repository dan GitLab runner?
+   Repository -> Tempat kita menyimpan kode untuk proyek yang kita buat. Runner -> Alat yang digunakan untuk proses CI/CD 
+16. Apa perbedaan antara Continuous Integration, Continuous Delivery, dan Continuous Deployment?
+   Continous Integration -> Beberapa pengembang menggabungkan kode yang mereka buat (pada proyek yang sama) pada sebuah repository. Continous Delivery -> Memastikan bahwa aplikasi siap diluncurkan ke env produksi. Continous Deployment -> Proses otomatis untuk meluncurkan aplikasi ke env produksi
+17.  Apa perbedaan dari stages-stages yang berada dalam file .gitlab-ci.yml?
+   Ada beberapa stage yang ada pada .gitlab-ci.yml ini yaitu build, test, build-image, publish-image, dan deploy. Stage build digunakan untuk membangun aplikasi yang ingin kita jalankan tentunya berdasarkan kode-kode yang ada pada repository. Stage test tentunya untuk testing. Pada stage build-image karena kita menggunakan docker image maka kita harus bikin terlebih dahulu dan dilanjutkan ke stage publish-image yang digunakan unutk mempublikasikan atau mem-push docker image yang telah dibuat ke registry server. Terakhir stage deploy tentunya untuk melakukan deploy aplikasi yang telah dibangun sehingga bisa digunakan.
+18. Pada script gitlab-ci.yml, terdapat perubahan if: $CI_COMMIT_BRANCH == 'main' menjadi if: $CI_COMMIT_BRANCH == 'feat/tutorial-7-bacabaca'. Apa fungsi dari perubahan tersebut?
+   Ini mengubah dari yang tadi runner akan dijalankan ketika kita commmit baru ke main menjadi runner akan dijalankan ketika ada commit baru pada branch feat/tutorial-7-bacabaca tersebut.
+19. Apa yang dimaksud dengan "docker registry"? Apa fungsinya? 
+   Docker Registry adalah temapt dimana kita dapat menyimpan image-image docker yang telah dibuat pada stage build-image. Digunakan untuk manajemen, verifikasi, dan lain sebagainya dari docker image.
+20. Dalam gitlab CI/CD, apa perbedaan antara: pipeline, stage, dan job?
+   Pipeline -> Alur/urutan pekerjaan yang dieksekusi secara berurutan. Stage -> Kumpulan job dijalankan bersamaan. Job -> Tugas-tugas yang dijalankan oleh/pada pipeline.
+21. Sertakan screenshot fullscreen saat Anda mengakses apap-xxx.cs.ui.ac.id ketika sudah berhasil men-deploy aplikasi menggunakan CI/CD! 
+   Sudah di deploy tapi ga bisa akses, yang lain pun begitu.
+   ![deploy berhasil](https://i.imgur.com/n5Y1agn.jpg)
+22. Kapan proses CI/CD dijalankan di GitLab?
+   Ketika kita melakukan push commit pada branch yang telah kita spesifikan pada .gitlab-ci.yml. Dari soal sebelumnya kita tahu bahwa dia akan dijalankan ketika kita push pada branch feat/tutorial-7-bacabaca
+23. Mengapa CI/CD ini penting? Apa manfaatnya? 
+   Sangat penting bagi pengembangan proyek karena beberapa alasan antara lain: Meningkatkan kualitas kode karena dapat kita cek apakah ada yang error/conflict dan lain sebagainya, meningkatkan kolaborasi antara anggota proyek, meningkatkan kecepatan delivery proyek. 
+---
 ## Tutorial 6
 ### What I have learned today
 1. Apa yang menjadi penyebab dari CONFLICT tersebut? 
