@@ -1,8 +1,7 @@
 version: '3.3'
 services:
   web:
-    build:
-      context: .
+    image: apap-registry.cs.ui.ac.id/rama.tridigdaya/apap-209
     restart: always
     ports:
       - "10209:8080"
@@ -16,24 +15,6 @@ services:
     networks:
       - frontend-network
       - backend-network
-
-  web2:
-    build:
-      context: .
-    restart: always
-    ports:
-      - "10210:2020"
-    volumes:
-      - ./file-storage:/file-storage
-      - ./log:/log
-    env_file:
-      - bacabaca/.env.app2
-    depends_on:
-      - db
-    networks:
-      - frontend-network
-      - backend-network
-
   db:
     image: postgres:14-alpine
     ports:
@@ -47,12 +28,14 @@ services:
     networks:
       - backend-network
 
+
 volumes:
   db:
-    driver: local
+
 
 networks:
   frontend-network:
     driver: bridge
   backend-network:
     driver: bridge
+
