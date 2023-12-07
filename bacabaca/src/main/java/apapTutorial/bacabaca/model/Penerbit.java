@@ -12,6 +12,8 @@ import java.util.List;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +21,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "penerbit")
 @Where(clause = "is_deleted = false")
+@JsonIgnoreProperties(value = {"listBuku"}, allowSetters = true)
 public class Penerbit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

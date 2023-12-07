@@ -4,6 +4,20 @@
 
 * **Rama Tridigdaya** - *2106638532* - *C*
 ---
+## Tutorial 8
+### What I have learned today
+1. Apa perbedaan antara encryption dan hashing? Mana yang lebih baik untuk penyimpanan password?
+   Jika kita meng-encode suatu file (plain text) menggunakan encryption, maka kita dapat mengembalikan atau men-decode kembali hasil encryption (cipher text) yang telah didapatkan menjadi file tersebut (plain text). Sedangkan pada hashing atau fungsi hash, sekali kita meng-encode suatu plain text maka hasil encode tersebut tidak akan dapat dikembalikan ke bentuk asalnya. Yang lebih baik untuk penyimpanan password tentunya adalah Hashing.
+2. Apa yang membuat spring meredirect pengguna ke /login ketika pertama kali membuka localhost:8080?
+   Pada webFilterChain di package WebSecurityConfig terdapat baris yang menyatakan bahwa setiap request ke server haruslah melalui autentikasi yaitu ".anyRequest().authenticated()" hal inilah yang menyebabkan ketika kita membuka localhost:8080 maka Spring akan me-redirect pengguna ke halaman login yang merupakan halaman autentikasi
+3. Kapan method loadUserByUsername ini dipanggil?
+   Method tersebut digunakan pada package JwtTokenFilter, method tersebut akan dipanggil ketika pengguna login ke dalam aplikasi atau sistem, kemudian sistem akan melakukan autentikasi, jika JWT Token tervalidasi maka method loadUserByUsername akan dipanggil untuk mendapatkan UserDetails dari pengguna tersebut.
+4. Apa makna dari anotasi order serta mengapa jwtFilterChain ada di order 1 dan webFilterChain ada di order 2?
+   Seperti namanya yaitu "Order", hal ini menentukan urutan eksekusi pada SecurityFilterChain yang ada pada package WebSecurityConfig. jwtFilterChain akan dieksekusi (atau dicek) terlebih dahulu sebelum webFilterChain.
+5. Apa itu Mono? Apa kegunaan Mono? 
+   Mono merupakan object yang merepresentasikan suatu nilai tunggal atau kosong. Pada contoh sendUser di atas, Mono digunakan untuk mengubah hasil response HTTP yang didapatkan menjadi class atau object dari UserResponseDTO.
+
+---
 ## Tutorial 7
 ### What I have learned today
 1. Apa itu Dockerfile dan docker-compose.yaml? Apa fungsinya?

@@ -24,7 +24,7 @@ import java.util.List;
 @Entity
 @Table(name = "buku")
 @Where(clause = "is_deleted = false")
-@JsonIgnoreProperties(value = {"penerbit"}, allowSetters = true)
+@JsonIgnoreProperties(value = {"listPenulis", "deleted"}, allowSetters = true)
 public class Buku {
     @Id
     private UUID id = UUID.randomUUID();
